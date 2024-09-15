@@ -83,7 +83,7 @@ try {
 
 
     const createdUser = await User.findById(user._id).select(
-        "-password"
+        "-password -refreshToken"
     )
 
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(createdUser._id);
