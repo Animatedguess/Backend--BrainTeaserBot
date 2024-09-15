@@ -71,7 +71,7 @@ try {
     if (!avatar) {
         throw new ApiError(400, "Avatar file is required")
     }
-   
+
 
     const user = await User.create({
         firstName,
@@ -81,16 +81,19 @@ try {
         lastName,
     })
 
+
     const createdUser = await User.findById(user._id).select(
-        "-password -refreshToken"
+        "-password"
     )
+
+    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(createdUser._id);
 
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong while registering the user")
     }
 
     return res.status(201).json(
-        new ApiResponse(200, createdUser, "User registered Successfully")
+        new ApiResponse(200, createdUser,accessToken, "User registered Successfully")
     )
 
 } )
