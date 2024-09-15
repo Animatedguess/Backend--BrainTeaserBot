@@ -51,7 +51,6 @@ const registerUser = asyncHandler( async (req, res) => {
     if (existedUser) {
         throw new ApiError(409, "User with email already exists")
     }
-    console.log(req.files);
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
     //const coverImageLocalPath = req.files?.coverImage[0]?.path;
@@ -64,7 +63,6 @@ const registerUser = asyncHandler( async (req, res) => {
     let avatar;
 try {
     avatar = await uploadOnCloudinary(avatarLocalPath);
-    console.log("Cloudinary response: ", avatar);
 } catch (error) {
     throw new ApiError(500, "Failed to upload avatar to Cloudinary");
 }
